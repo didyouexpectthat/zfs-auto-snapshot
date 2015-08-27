@@ -11,11 +11,27 @@ snapshots if it is installed.
 This program is a posixly correct bourne shell script.  It depends only on
 the zfs utilities and cron, and can run in the dash shell.
 
+After installation, you need to set properties.
+
+# zfs set com.sun:auto-snapshot:hourly=false [pool]
+# zfs set com.sun:auto-snapshot:daily=false [pool]
+# zfs set com.sun:auto-snapshot:frequent=false [pool]
+# zfs set com.sun:auto-snapshot=true [pool]
+# zfs set com.sun:auto-snapshot:monthly=false [pool]
+
+That sets for your whole pool auto-snapshot off. You can turn on on the root 
+level and it should propogate down. 
+
+# zfs get com.sun:auto-snapshot [pool] [pool]/[dataset]
+NAME            PROPERTY               VALUE                  SOURCE
+[pool]           com.sun:auto-snapshot  true                   local
+[pool]/[dataset]  com.sun:auto-snapshot  true                   inherited from [pool]
+
 
 Installation:
 -------------
 
-wget https://github.com/zfsonlinux/zfs-auto-snapshot/archive/master.zip
+wget https://github.com/didyouexpectthat/zfs-auto-snapshot/archive/master.zip
 unzip master.zip
 cd zfs-auto-snapshot-master
 make install
